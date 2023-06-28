@@ -21,10 +21,23 @@ function App() {
   }
 
   
-  const sortPopularity =() => contacts.popularity.sort((a,b) => a-b);
-  const sortName = () => contacts.name.sort((a,b) => a-b);
+  function sortByPopularity() {
+    const sortContactsPopularity = [...contacts].sort((a, b) => b.popularity - a.popularity);
+    setContacts(sortContactsPopularity)
+  }
+  function sortByName() {
+    const sortContactsName = [...contacts].sort((a, b) => a.name > b.name ? 1 : -1,);
+    setContacts(sortContactsName)
+  }
 
-
+  function ContactsList() {
+    const [contacts, setContacts] = useState(contacts);
+    const deleteContact = contactsId => {
+      const filteredContacs = contacts.filter(contacts => {
+        return contacts.id !== contactsId;
+      });
+      setContacts(filteredContacs);
+    }}
 
 
 
@@ -32,8 +45,9 @@ return (
   <div className="App">
     <div className='buttonsList' >
     <button onClick={addRandomContact}> Add Random Contact</button>
-    <button onClick={sortPopularity}> Sort by popularity</button>
-    <button onClick={sortName}> Sort by name</button>
+    <button onClick={sortByPopularity}> Sort by popularity</button>
+    <button onClick={sortByName}> Sort by name</button>
+    <button onClick={() => deleteContact(contacts.id)} className='btn-delete'>Delete Contact</button>
     </div>
     
 
