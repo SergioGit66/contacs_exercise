@@ -20,69 +20,70 @@ function App() {
     })
   }
 
-  
+
   function sortByPopularity() {
     const sortContactsPopularity = [...contacts].sort((a, b) => b.popularity - a.popularity);
     setContacts(sortContactsPopularity)
   }
+  // ToDo : comprender logica y desarrollar propia
+  
   function sortByName() {
-    const sortContactsName = [...contacts].sort((a, b) => a.name > b.name ? 1 : -1,);
+    const sortContactsName = [...contacts].sort((a, b) => a.name > b.name ? 1 : -2,);
     setContacts(sortContactsName)
   }
-
-  function ContactsList() {
-    const [contacts, setContacts] = useState(contacts);
-    const deleteContact = contactsId => {
-      const filteredContacs = contacts.filter(contacts => {
-        return contacts.id !== contactsId;
+    
+    const deleteContact = contactId => {
+      const filteredContacs = contacts.filter(contact => {
+        return contact.id !== contactId;
       });
       setContacts(filteredContacs);
-    }}
+    }
 
 
 
-return (
-  <div className="App">
-    <div className='buttonsList' >
-    <button onClick={addRandomContact}> Add Random Contact</button>
-    <button onClick={sortByPopularity}> Sort by popularity</button>
-    <button onClick={sortByName}> Sort by name</button>
-    <button onClick={() => deleteContact(contacts.id)} className='btn-delete'>Delete Contact</button>
+
+  return (
+    <div className="App">
+      <div className='buttonsList' >
+        <button onClick={addRandomContact}> Add Random Contact</button>
+        <button onClick={sortByPopularity}> Sort by popularity</button>
+        <button onClick={sortByName}> Sort by name</button>
+        
+      </div>
+
+
+      <table>
+        <tbody>
+          <tr>
+            <th> Picture </th>
+            <th> Name </th>
+            <th> Popularity</th>
+            <th> Won Oscar</th>
+            <th> Won Emmy</th>
+
+
+
+          </tr>
+          {contacts.map((contact) => {
+
+            return (
+              <tr key={contact.id}>
+                <td> <img src={contact.pictureUrl} /></td>
+                <td> {contact.name} </td>
+                <td> {contact.popularity} </td>
+                <td>{(contact.wonOscar) ? <img src='https://cdn.mos.cms.futurecdn.net/xdNv5FjgahgnvV7RmMedWD-320-80.jpg' /> : <img src='https://nicolesymmonds.files.wordpress.com/2015/01/no_oscar.jpg' />}</td>
+                <td>{(contact.wonEmmy) ? <img src='https://media.istockphoto.com/id/937808156/es/vector/icono-de-bot%C3%B3n-verde-s%C3%AD-s%C3%ADmbolo-de-ok-vector-de.jpg?s=612x612&w=0&k=20&c=gfjM0uBb4B8gW_qBUeju6iv91LGRGQJM5l6b6qro4D4=' /> : <img src='https://provialmex.com.mx/wp-content/uploads/2022/12/simbolo-de-no-estacionarse.webp' />}</td>
+                <button onClick={() =>  deleteContact (contact.id)}>Delete Contact</button>
+              </tr>
+
+            )
+          })}
+        </tbody>
+
+      </table>
+
     </div>
-    
-
-    <table>
-      <tbody>
-        <tr>
-          <th> Picture </th>
-          <th> Name </th>
-          <th> Popularity</th>
-          <th> Won Oscar</th>
-          <th> Won Emmy</th>
-
-
-
-        </tr>
-        {contacts.map((contact) => {
-
-          return (
-            <tr key={contact.id}>
-              <td> <img src={contact.pictureUrl} /></td>
-              <td> {contact.name} </td>
-              <td> {contact.popularity} </td>
-              <td>{(contact.wonOscar) ? <img src='https://cdn.mos.cms.futurecdn.net/xdNv5FjgahgnvV7RmMedWD-320-80.jpg' /> : <img src='https://nicolesymmonds.files.wordpress.com/2015/01/no_oscar.jpg' />}</td>
-              <td>{(contact.wonEmmy) ? <img src='https://media.istockphoto.com/id/937808156/es/vector/icono-de-bot%C3%B3n-verde-s%C3%AD-s%C3%ADmbolo-de-ok-vector-de.jpg?s=612x612&w=0&k=20&c=gfjM0uBb4B8gW_qBUeju6iv91LGRGQJM5l6b6qro4D4=' /> : <img src='https://provialmex.com.mx/wp-content/uploads/2022/12/simbolo-de-no-estacionarse.webp' />}</td>
-
-            </tr>
-
-          )
-        })}
-      </tbody>
-
-    </table>
-
-  </div>
-);
+  );
 }
 
 export default App;
